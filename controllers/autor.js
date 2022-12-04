@@ -1,3 +1,4 @@
+const ErrorResponse = require('./../helper/errorResponse');
 const Autor = require('./../models/Autor');
 
 // Para que express pueda procesar un json
@@ -13,7 +14,7 @@ exports.crearAutor = async (req, res, next) => {
             data: autorData
         });
     }catch(err){
-        res.status(400).json({status: 400, data: err});
+        next(new ErrorResponse("No se pudo crear el autor"+ err.message, 500));
     }
 };
 
@@ -23,7 +24,7 @@ exports.getAutor = async (req, res, next) => {
         const autorList = await Autor.find();
         res.status(200).json(autorList);
     }catch(err){
-        res.status(400).json({status: 400, data: err});
+        next(new ErrorResponse("No es posible recuperar los autores", 500));
     }
 };
 
@@ -31,9 +32,15 @@ exports.getAutorById = async (req, res, next) => {
     try{
         // Mongoose funciones
         const autor = await Autor.findById(req.params.id);
+
+        if(!autor){
+            return next(new ErrorResponse("El auto no existe en db con el id: "+ req.params.id, 404));
+        }
+
         res.status(200).json(autor);
     }catch(err){
-        res.status(400).json({status: 400, data: err});
+        // Si hay un error la funcion mandara el error al middleware
+        next(new ErrorResponse("El auto no existe con el id: "+ req.params.id, 404));
     }
 };
 
@@ -46,12 +53,12 @@ exports.updateAutor = async (req, res, next) => {
             req.body
         );
         if(!autor){
-            res.status(400).json({status: 400});
+            return next(new ErrorResponse("No se encontro autor update: "+ req.params.id, 404));
         }
 
         res.status(200).json({status:200, data: autor});
     }catch(err){
-        res.status(400).json({status: 400, data: err});
+        next(new ErrorResponse("No es posible actualizar al autor: "+ err.message, 404));
     }
 };
 
@@ -64,11 +71,11 @@ exports.deleteAutor = async (req, res, next) => {
         );
 
         if(!autor){
-            res.status(404).json({status: 404});
+            return next(new ErrorResponse("No se encontro autor delete: "+ req.params.id, 404));
         }
 
         res.status(200).json({status:200});
     }catch(err){
-        res.status(400).json({status: 400, data: err});
+        next(new ErrorResponse("No se pudo eliminar autor: "+ err.message, 500));
     }
 };

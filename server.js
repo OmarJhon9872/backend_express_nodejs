@@ -1,5 +1,7 @@
 const dotenv = require('dotenv');
 const express = require('express');
+// Middleware que transforma errores a 500 y json 
+const errorHandler = require('./middleware/error');
 //Dependencia middleware
 const morgan = require('morgan');
 // Mongose ODM Object Data Modeling
@@ -29,8 +31,8 @@ if(process.env.NODE_ENV === 'development'){
 app.use('/api/libro', libro);
 app.use('/api/libreriaAutor', autor);
 
-
-
+// Middleware
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
