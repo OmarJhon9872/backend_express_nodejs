@@ -1,3 +1,3 @@
 Cadena de conexion compass
 https://downloads.mongodb.com/compass/mongodb-compass-1.34.1-win32-x64.msi
-mongodb+srv://jonax9872:12121212@cluster0.fsfajug.mongodb.net/test
+mongodb+srv://jonax9872:78451212@cluster0.fsfajug.mongodb.net/test
