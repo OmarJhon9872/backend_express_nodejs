@@ -3,10 +3,11 @@ const ruta = express.Router();
 
 const {
   getLibros,
-  getLibro,
+  getLibroById,
   crearLibro,
-  actualizarLibro,
-  eliminarLibro,
+  updateLibro,
+  deleteLibro,
+  pagination
 } = require("./../controllers/libro");
 
 ruta
@@ -16,9 +17,13 @@ ruta
 
 ruta
     .route('/:id')
-    .get(getLibro)
-    .put(actualizarLibro)
-    .delete(eliminarLibro);
+    .get(getLibroById)
+    .put(updateLibro)
+    .delete(deleteLibro);
+
+ruta
+    .route('/pagination')
+	.post(pagination);
 
 
 module.exports = ruta;
