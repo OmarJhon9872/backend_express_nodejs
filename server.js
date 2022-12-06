@@ -16,23 +16,23 @@ connectDatabase();
 
 const libro = require('./rutas/libro');
 const autor = require('./rutas/autor');
+const pageNotFound = require('./rutas/404');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// const logger = (req, res, next) => {
-//     console.log("Request pasando por middleware");
-//     next();
-// };
+
 if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
 }
+
 
 // Listado de rutas de la app
 //Url generico, objeto instancias
 app.use('/api/libro', libro);
 app.use('/api/libreriaAutor', autor);
+app.use('*', pageNotFound);
 
 // Middleware
 app.use(errorHandler);
