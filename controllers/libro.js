@@ -12,15 +12,16 @@ exports.getLibros = async (req, res, next) => {
 };
 
 exports.getLibroById = async (req, res, next) => {
-    try{
-        console.log("Llegue aqui");
+    try{        
         const libroId = await Libro.findById(req.params.id);
 
         if(!libroId){
+
             return next(new ErrorResponse("No se encontro el libro", 404));
         }
         res.status(200).json(libroId);
     }catch(err){
+        
         next(new ErrorResponse("No se pudo obtener el libro: "+err.message, 404));
     }
 };

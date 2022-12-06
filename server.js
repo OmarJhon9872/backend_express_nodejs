@@ -4,6 +4,8 @@ const express = require('express');
 const errorHandler = require('./middleware/error');
 //Dependencia middleware
 const morgan = require('morgan');
+// Cors
+const cors = require('cors');
 // Mongose ODM Object Data Modeling
 const connectDatabase = require('./config/db')
 
@@ -17,6 +19,7 @@ const autor = require('./rutas/autor');
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // const logger = (req, res, next) => {
 //     console.log("Request pasando por middleware");
@@ -32,7 +35,7 @@ app.use('/api/libro', libro);
 app.use('/api/libreriaAutor', autor);
 
 // Middleware
-// app.use(errorHandler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

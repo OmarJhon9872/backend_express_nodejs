@@ -1,8 +1,7 @@
 const errorHandler = (err, req, res, next) => {
-    console.log("Errores en mi controller", err);
 
-    res.status(500).json({
-        status: 500,
+    res.status(err.statusCode).json({
+        status: err.statusCode,
         mensaje: err.message
     });
 };
