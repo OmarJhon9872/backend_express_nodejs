@@ -16,6 +16,7 @@ connectDatabase();
 
 const libro = require('./rutas/libro');
 const autor = require('./rutas/autor');
+const usuario = require('./rutas/usuario');
 const pageNotFound = require('./rutas/404');
 
 const app = express();
@@ -32,6 +33,7 @@ if(process.env.NODE_ENV === 'development'){
 //Url generico, objeto instancias
 app.use('/api/libro', libro);
 app.use('/api/libreriaAutor', autor);
+app.use('/usuario', usuario);
 app.use('*', pageNotFound);
 
 // Middleware

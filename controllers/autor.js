@@ -48,13 +48,15 @@ exports.updateAutor = async (req, res, next) => {
     try{
         // Mongoose funciones
         // Recibe id y data json a actualizar
-        const autor = await Autor.findByIdAndUpdate(
+        let autor = await Autor.findByIdAndUpdate(
             req.params.id,
             req.body
         );
         if(!autor){
             return next(new ErrorResponse("No se encontro autor update: "+ req.params.id, 404));
         }
+
+        autor = await Autor.findById(autor.id);
 
         res.status(200).json({status:200, data: autor});
     }catch(err){
