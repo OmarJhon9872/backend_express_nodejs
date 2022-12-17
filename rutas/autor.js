@@ -2,6 +2,8 @@ const { Router } = require('express');
 const express = require('express');
 const ruta = express.Router();
 
+const {seguridad} = require('./../middleware/seguridad');
+
 const { 
     crearAutor, 
     getAutor, 
@@ -12,13 +14,13 @@ const {
 
 ruta
     .route('/')
-    .post(crearAutor)
-    .get(getAutor);
+    .post(seguridad, crearAutor)
+    .get(seguridad, getAutor);
 
 ruta
     .route('/:id')
-    .get(getAutorById)
-    .put(updateAutor)
-    .delete(deleteAutor);
+    .get(seguridad, getAutorById)
+    .put(seguridad, updateAutor)
+    .delete(seguridad, deleteAutor);
 
 module.exports = ruta;

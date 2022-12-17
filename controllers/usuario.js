@@ -74,8 +74,25 @@ exports.login = async (req, res, next) => {
     }
 };
 
-exports.getUsuario = (req, res, next) => {
-  res.status(200).json({
-    status: 200,
-  });
+exports.getUsuario = async (req, res, next) => {
+    
+    try{
+
+        
+        const usuarioTokenProcesado = req.usuario;
+
+        const token = await usuarioTokenProcesado.crearJsonWebToken();
+
+        res.status(200).json({
+            status: 200,
+            id: usuarioTokenProcesado._id,
+            nombre: usuarioTokenProcesado.nombre,
+            apellido: usuarioTokenProcesado.apellido,
+            username: usuarioTokenProcesado.userName,
+            email: usuarioTokenProcesado.email,
+            token,
+        });
+    }catch(err){
+        next(new ErrorResponse("Error obteniendo usuario: " + err, 400));
+    }
 };

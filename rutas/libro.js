@@ -1,6 +1,8 @@
 const express = require("express");
 const ruta = express.Router();
 
+const {seguridad} = require('./../middleware/seguridad');
+
 const {
   getLibros,
   getLibroById,
@@ -12,18 +14,18 @@ const {
 
 ruta
     .route('/')
-    .get(getLibros)
-    .post(crearLibro);
+    .get(seguridad, getLibros)
+    .post(seguridad, crearLibro);
 
 ruta
     .route('/:id')
-    .get(getLibroById)
-    .put(updateLibro)
-    .delete(deleteLibro);
+    .get(seguridad, getLibroById)
+    .put(seguridad, updateLibro)
+    .delete(seguridad, deleteLibro);
 
 ruta
     .route('/pagination')
-	.post(pagination);
+	.post(seguridad, pagination);
 
 
 module.exports = ruta;
