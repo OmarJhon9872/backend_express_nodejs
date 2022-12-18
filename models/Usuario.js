@@ -20,7 +20,7 @@ const UsuarioSchema = new mongoose.Schema({
         required: [true, 'Ingrese un email'],
         unique: true,
         match: [
-            /^\w+[\w-\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$/,
+            /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
             'Tipo de correo no valido'
         ]
     },
